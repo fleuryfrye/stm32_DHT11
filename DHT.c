@@ -1,5 +1,4 @@
 #include "DHT.h"
-#include "cmsis_os.h"
 
 /* GPIO register bit manipulation macros */
 #define DHT_GPIO_SET_BIT(port, pin)     ((port)->ODR |= (1U << (pin)))
@@ -223,8 +222,6 @@ static DHT_Status_t DHT_ReadBits(GPIO_TypeDef *port, TIM_TypeDef *timer, uint16_
     /* Read 40 bits */
     for (int i = 0; i < 40; i++)
     {
-        taskENTER_CRITICAL();
-        {
             DHT_TIMER_RESET_COUNT(timer);
             
             /* Wait for line to go high */
@@ -244,8 +241,7 @@ static DHT_Status_t DHT_ReadBits(GPIO_TypeDef *port, TIM_TypeDef *timer, uint16_
             if (pulse_width > DHT_THRESHOLD_TICKS) {
                 data[i / 8] |= (1 << (7 - (i % 8)));
             }
-        }
-        taskEXIT_CRITICAL();
+
     }
     
     return DHT_OK;
@@ -306,3 +302,4 @@ DHT_Status_t GetDHTData(DHT_Config_t *config, uint8_t *data)
     
     return DHT_OK;
 }
+
