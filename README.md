@@ -1,4 +1,4 @@
-Wrote a DHT11 driver for STM32F303K8.
+Wrote a DHT11 driver for STM32F3 series.
 
 To use, use the DHT config struct (DHT_Config_t) to select the GPIO port (A, B, or F) as well as the pin number connected to the data line of the DHT11.
 Then, select one of the available timers (3, 7, 15, 16, 17) to be used to collect the temperature/humidity data as well as the data read timeout (Recommended 100,000).
